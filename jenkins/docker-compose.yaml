@@ -1,0 +1,15 @@
+services:
+  jenkins:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      privileged: true
+    user: true
+    ports:
+        - 8080-:8080
+        - /var/run/docker.sock:/var/run/docker.sock   
+    networks:
+        - devops_net
+networks:
+ devops_net:
+
