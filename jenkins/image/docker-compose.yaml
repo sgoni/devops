@@ -6,7 +6,7 @@ services:
       privileged: true      
     container_name: jenkins
     restart: always
-    user: true
+    user: "true"
     ports:
         - 8080-:8080
         - /var/run/docker.sock:/var/run/docker.sock   
