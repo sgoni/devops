@@ -1,4 +1,4 @@
-s# Dockerfile to create a Jenkins image with Docker Engine included.
+# Dockerfile to create a Jenkins image with Docker Engine included.
 FROM jenkins/jenkins
 USER root
 
