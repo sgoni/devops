@@ -1,0 +1,29 @@
+services:
+  jenkins:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      privileged: true      
+    container_name: jenkins
+    restart: always
+    user: true
+    ports:
+        - 8080-:8080
+        - /var/run/docker.sock:/var/run/docker.sock   
+    volumes:
+      - $PWD/jenkins_home:/var/jenkins_home
+    networks:
+        - devops_net
+  sonarqube:
+    container_name: sonarqube
+    image: sonarqube
+    ports:
+      - 9090:9090
+    environment:
+      SONARQUBE_USERNAME: admin
+      SONARQUBE_PASSWORD: pIn#h1E8
+    networks:
+      - net
+networks:
+ devops_net:
+
