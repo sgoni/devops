@@ -2,11 +2,11 @@ services:
   rabbitmq:
     container_name: "rabbitmq"
     image: rabbitmq:3.8-management-alpine
-    environment:
-      - RABBITMQ_DEFAULT_PASS_FILE=wad*dr=9RlGl
-      - RABBITMQ_DEFAULT_USER_FILE=guest
     ports:
-      # RRabbitMq instance
+      # RabbitMq instance
       - "5672:5672"
       # Web intergace
-      - "15672:15672"
+      - "15672:15672"    
+    environment:
+      - RABBITMQ_DEFAULT_PASS=wad*dr=9RlGl
+      - RABBITMQ_DEFAULT_USER=guest
