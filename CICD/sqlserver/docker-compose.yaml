@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  sqlserver:
+    container_name: "db-sqlserver"
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    restart: always
+    ports:
+      - "1433:1433"  
+    env_file:
+      - sqlserver.env
+      - sapassword.env      
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P @Aczkx3pvq#bpww -Q 'SELECT 1'"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s      
+    networks:
+      - app-network-public
+    volumes:   # Opcional, para persistencia de datos
+          - sql-server-data:/var/opt/mssql/  # Monta un volumen para los datos de SQL Server
+          - sqldata:/var/opt/sqlserver/data
+          - sqllog:/var/opt/sqlserver/log
+          - sqlbackup:/var/opt/sqlserver/backup
+          - /c/docker/shared:/usr/shared      
+volumes:
+  sql-server-data:
+    driver: local
+  sqldata:
+  sqllog:
+  sqlbackup:
+
+networks:
+  app-network-public:
+    driver: bridge

@@ -2,6 +2,7 @@ services:
   rabbitmq:
     container_name: "rabbitmq"
     image: rabbitmq:3.8-management-alpine
+    restart: always
     ports:
       # RabbitMq instance
       - "5672:5672"
