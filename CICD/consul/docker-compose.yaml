@@ -1,0 +1,17 @@
+services:
+  consul:
+    image: consul:1.15.4  # Imagen oficial de Consul
+    container_name: consul-server
+    ports:
+      - "8500:8500"      # Puerto para la interfaz web y API HTTP
+      - "8600:8600/udp"  # Puerto para consultas DNS
+    environment:
+      - CONSUL_BIND_INTERFACE=eth0  # Configuración de la interfaz de red
+    command: agent -dev -client=0.0.0.0
+    volumes:
+      - consul_data:/consul/data    # Persistencia de datos de Consul (opcional)
+      - consul_config:/consul/config # Opcional para archivos de configuración
+
+volumes:
+  consul_data:
+  consul_config:
