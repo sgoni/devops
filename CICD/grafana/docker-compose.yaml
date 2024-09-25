@@ -1,0 +1,14 @@
+services:
+  grafana:
+    image: grafana/grafana:latest  # Usa la última versión de Grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"  # Expon el puerto 3000
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin  # Usuario por defecto
+      - GF_SECURITY_ADMIN_PASSWORD=admin  # Contraseña por defecto
+    volumes:
+      - grafana_data:/var/lib/grafana  # Persistencia de datos
+
+volumes:
+  grafana_data:
