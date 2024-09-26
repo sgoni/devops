@@ -1,7 +1,8 @@
 services:
   grafana:
-    image: grafana/grafana:latest  # Usa la última versión de Grafana
+    image: grafana/grafana-enterprise:11.2.0-ubuntu   # Usa la última versión de Grafana
     container_name: grafana
+    restart: always
     ports:
       - "3000:3000"  # Expon el puerto 3000
     environment:
