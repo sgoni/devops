@@ -134,7 +134,7 @@ http://localhost:9090
 #### Paso 1: Crear un Script de Inicio:
 
 ```bash
-sudo vum start_prometheus.sh
+sudo vim start_prometheus.sh
 ```
 
 ```bash
@@ -155,7 +155,13 @@ chmod +x start_prometheus.sh
 ```
 ## Instalar Node Exporter Linux
 
-### Paso 1: Descargar y extraer node_exporter
+### Paso 1: Instalar las dependencias necesarias
+
+```bash
+apt update && apt install -y wget tar
+```
+
+### Paso 2: Descargar y extraer node_exporter
 
 Cambiar al directorio de trabajo preferido y descargar el archivo node_exporter-1.8.2.linux-amd64.tar.gz.
 
@@ -163,26 +169,26 @@ Cambiar al directorio de trabajo preferido y descargar el archivo node_exporter-
 wget https://github.com/prometheus/node_exporter/releases/download/v1.8.2/node_exporter-1.8.2.linux-amd64.tar.gz
 ```
 
-### Paso 2: Extrae el archivo descargado
+### Paso 3: Extrae el archivo descargado
 
 ```bash
 tar xvf node_exporter-1.8.2.linux-amd64.tar.gz
 ```
 
-### Paso 3: Mover y ejecutar node_exporter
+### Paso 4: Mover y ejecutar node_exporter
 
 ```bash
 mv node_exporter-1.8.2.linux-amd64/node_exporter /usr/local/bin/
 chmod +x /usr/local/bin/node_exporter
 ```
 
-### Paso 4: Ejecutar node_exporter
+### Paso 5: Ejecutar node_exporter
 
 ```bash
 node_exporter &
 ```
 
-### Paso 5: Verificar que node_exporter esté corriendo
+### Paso 6: Verificar que node_exporter esté corriendo
 
 Verificar si node_exporter está funcionando correctamente usando curl para acceder al puerto 9100:
 
