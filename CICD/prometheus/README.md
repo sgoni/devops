@@ -5,7 +5,7 @@
 2. [Requirements](#requirements)
 3. [Installation](#installation)
 4. [Consideraciones Especiales para WSL](#consideraciones-especiales-para-wsl)
-5. [Download](#download)
+5. [Instalar Node Exporter Linux](#instalar-node-exporter-linux)
 6. [Author](#author)
 7. [License](#license)
 8. [FAQs](#faqs)
@@ -152,4 +152,41 @@ chmod +x start_prometheus.sh
 
 ```bash
 ./start_prometheus.sh
+```
+## Instalar Node Exporter Linux
+
+### Paso 1: Descargar y extraer node_exporter
+
+Cambiar al directorio de trabajo preferido y descargar el archivo node_exporter-1.8.2.linux-amd64.tar.gz.
+
+```bash
+wget https://github.com/prometheus/node_exporter/releases/download/v1.8.2/node_exporter-1.8.2.linux-amd64.tar.gz
+```
+
+### Paso 2: Extrae el archivo descargado
+
+```bash
+tar xvf node_exporter-1.8.2.linux-amd64.tar.gz
+```
+
+### Paso 3: Mover y ejecutar node_exporter
+
+```bash
+mv node_exporter-1.8.2.linux-amd64/node_exporter /usr/local/bin/
+chmod +x /usr/local/bin/node_exporter
+```
+
+### Paso 4: Ejecutar node_exporter
+
+```bash
+node_exporter &
+```
+
+### Paso 5: Verificar que node_exporter esté corriendo
+
+Verificar si node_exporter está funcionando correctamente usando curl para acceder al puerto 9100:
+
+```bash
+apk add curl  # o `apt install -y curl` en Ubuntu
+curl http://localhost:9100/metrics
 ```
