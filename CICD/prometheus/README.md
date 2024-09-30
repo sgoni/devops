@@ -5,10 +5,11 @@
 2. [Requirements](#requirements)
 3. [Installation](#installation)
 4. [Consideraciones Especiales para WSL](#consideraciones-especiales-para-wsl)
-5. [Instalar Node Exporter Linux](#instalar-node-exporter-linux)
-6. [Author](#author)
-7. [License](#license)
-8. [FAQs](#faqs)
+5. [Installation Script Bash](#installation-script-bash)
+6. [Uninstallation](#uninstallation)
+7. [Instalar Node Exporter Linux](#instalar-node-exporter-linux)
+8. [Author](#author)
+9. [License](#license)
    
 ### General Info
    
@@ -158,6 +159,85 @@ chmod +x start_prometheus.sh
 ```bash
 ./start_prometheus.sh
 ```
+## Installation Script Bash
+
+1- Dale permisos de ejecución al archivo install_prometheus.sh.
+
+```bash
+chmod +x install_prometheus.sh
+```
+
+2- Ejecuta el script con permisos de superusuario:
+
+```bash
+sudo ./install_prometheus.sh
+```
+
+## Uninstallation
+
+1- Guarda el siguiente contenido en un archivo, por ejemplo, uninstall_prometheus.sh:
+
+```bash
+#!/bin/bash
+
+# Desinstalar Prometheus
+
+echo "Deteniendo el proceso de Prometheus..."
+
+# Buscar el proceso de Prometheus
+PROMETHEUS_PID=$(pgrep prometheus)
+
+# Si se encuentra el proceso, detenerlo
+if [ -n "$PROMETHEUS_PID" ]; then
+    echo "Se encontró Prometheus corriendo con PID: $PROMETHEUS_PID"
+    kill $PROMETHEUS_PID
+    echo "Proceso Prometheus detenido."
+else
+    echo "No se encontró ningún proceso de Prometheus corriendo."
+fi
+
+# Eliminar los binarios
+echo "Eliminando binarios de Prometheus..."
+sudo rm -f /usr/local/bin/prometheus
+sudo rm -f /usr/local/bin/promtool
+echo "Binarios eliminados."
+
+# Eliminar archivos de configuración y datos
+echo "Eliminando archivos de configuración y datos..."
+sudo rm -rf /etc/prometheus
+sudo rm -rf /var/lib/prometheus
+echo "Archivos de configuración y datos eliminados."
+
+# Eliminar el archivo de servicio de systemd, si existe
+if [ -f /etc/systemd/system/prometheus.service ]; then
+    echo "Eliminando el archivo de servicio de Prometheus..."
+    sudo rm -f /etc/systemd/system/prometheus.service
+    sudo systemctl daemon-reload
+    echo "Archivo de servicio eliminado y systemd recargado."
+else
+    echo "No se encontró un archivo de servicio de Prometheus en systemd."
+fi
+
+# Eliminar los archivos descargados
+echo "Eliminando archivos descargados de Prometheus..."
+rm -f prometheus-*.linux-amd64.tar.gz
+rm -rf prometheus-*.linux-amd64
+echo "Archivos descargados eliminados."
+
+echo "Desinstalación de Prometheus completada."
+```
+
+2- Dale permisos de ejecución al script:
+
+```bash
+chmod +x uninstall_prometheus.sh
+```
+
+3- Ejecutar el script:
+
+```bash
+sudo ./uninstall_prometheus.sh
+```
 ## Instalar Node Exporter Linux
 
 ### Paso 1: Instalar las dependencias necesarias
@@ -201,3 +281,7 @@ Verificar si node_exporter está funcionando correctamente usando curl para acce
 apk add curl  # o `apt install -y curl` en Ubuntu
 curl http://localhost:9100/metrics
 ```
+
+## Author
+
+Steven Goni
