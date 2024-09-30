@@ -70,6 +70,11 @@ sudo mv prometheus.yml /etc/prometheus/
 sudo chown -R prometheus:prometheus /etc/prometheus /var/lib/prometheus
 ```
 
+```bash
+sudo chown -R prometheus:prometheus /var/lib/prometheus/
+sudo chmod -R 775 /var/lib/prometheus/
+```
+
 ### Paso 8: Crea un archivo de servicio de Systemd
 
 ```bash
