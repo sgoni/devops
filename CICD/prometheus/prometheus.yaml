@@ -1,0 +1,18 @@
+# prometheus.yaml
+apiVersion: 1
+kind: PersistentVolumeClaims 
+
+metadata:
+  labels:
+    app.kubernetes.io/instance: prometheus
+    app.kubernetes.io/name: alertmanager
+  name: storage-prometheus-alertmanager-0
+  namespace: prometheus
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  volumeMode: Fylesystem
+  storageClassName: gp2

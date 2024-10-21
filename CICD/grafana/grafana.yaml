@@ -1,0 +1,23 @@
+# grafana.yaml
+replicaCount: 1
+
+persistence:
+  enabled: true
+  storageClassName: "gp2"
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+
+adminUser: "admin"
+adminPassword: "EKS!sAWSome"
+
+service:
+  type: LoadBalancer
+
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "100m"
+  limits:
+    memory: "512Mi"
+    cpu: "200m"
