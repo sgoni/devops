@@ -33,6 +33,10 @@ helm install prometheus prometheus-community/prometheus \
   --set alertmanager.persistentVolume.storageClass="gp2" \
   --set server.persistentVolume.storageClass="gp2"
 
+# Aplicar script pv.yaml
+echo "Aplicandp script pv.yaml..."
+sudo kubectl apply -f pv.yaml
+
 # Verificar si la instalación fue exitosa
 if helm list -n prometheus | grep -q prometheus; then
   echo "Prometheus instalado con éxito en el namespace prometheus."
