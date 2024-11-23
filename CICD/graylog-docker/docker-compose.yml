@@ -1,0 +1,45 @@
+services:
+  mongodb:
+    image: mongo:6.0
+    container_name: graylog-mongo
+    networks:
+      - graylog-net
+
+  opensearch:
+    image: opensearchproject/opensearch:2.10.0
+    container_name: graylog-opensearch
+    environment:
+      - discovery.type=single-node
+      - plugins.security.disabled=true
+      - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - graylog-net
+
+  graylog:
+    image: graylog/graylog:5.1
+    container_name: graylog
+    restart: always
+    environment:
+      - GRAYLOG_HTTP_EXTERNAL_URI=http://localhost:9000/
+      # at least 16 characters
+      - GRAYLOG_PASSWORD_SECRET=thispassshouldbeatleast16characters
+      # Password: admin
+      - GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918      
+    ports:
+      - "9000:9000"
+      - "12201:12201/udp" # Entrada de logs GELF UDP
+    volumes:
+      - ./config/graylog.conf:/usr/share/graylog/data/config/graylog.conf
+    depends_on:
+      - mongodb
+      - opensearch
+    networks:
+      - graylog-net
+
+networks:
+  graylog-net:
+    driver: bridge
